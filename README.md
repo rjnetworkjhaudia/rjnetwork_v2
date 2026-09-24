@@ -1,21 +1,38 @@
-# RJ NETWORK V2.5
+# RJ NETWORK V2.6
 
-Billing & Payment System built on the V2.4 Customer Portal + V2.3 Admin Dashboard.
+Automated Monthly Billing + Payment Reconciliation.
 
-## Main files
+V2.6 is cumulative from V2.5 and includes:
+- Customer Portal
+- Customer/Ticket database architecture
+- Admin Dashboard
+- Billing & Payment
+- Automated monthly invoice generation
+- Automatic overdue status handling
+- Internal payment/invoice reconciliation
+- Billing run audit history
+- Manual billing-cycle trigger
 
-- `customer.html` — customer login, account, invoices, payment history and payment submission.
-- `billing.html` — admin billing/invoice/payment verification.
-- `admin.html` — existing admin dashboard with Billing shortcut.
-- `worker/src/index.js` — V2.5 API endpoints.
-- `worker/V2.5-MIGRATION.sql` — migration for an existing V2.4 D1 database.
-- `worker/schema.sql` — fresh-install schema including V2.5 tables.
-- `V2.5-BILLING-PAYMENT.md` — deployment and operational notes.
+## Frontend
+GitHub Pages can host the HTML/CSS/JS files.
 
-## Payment workflow
+## Backend
+Cloudflare Worker + D1 are required for real customer, ticket and billing data.
 
-Customer submits a payment -> `pending` -> admin verifies -> `approved` or `rejected`.
+## V2.5 → V2.6 migration
+For an existing V2.5 D1 database:
 
-Approved payments accumulate against the invoice. When the approved total reaches the invoice amount, the invoice becomes `paid`.
+```bash
+npx wrangler d1 execute rj-network --remote --file=worker/V2.6-MIGRATION.sql
+```
 
-Automatic bKash transaction verification is intentionally not included in V2.5.
+## Worker deployment
+
+```bash
+cd worker
+npx wrangler deploy
+```
+
+The Worker cron is configured for daily 02:15 UTC.
+
+See `V2.6-AUTOMATED-BILLING.md` for the full deployment and behavior notes.
