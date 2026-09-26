@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#06111f">
+  <meta name="description" content="RJ NETWORK Store — WiFi ও Networking Products">
+  <title>RJ NETWORK Store</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="products.js"></script>
+
+  <style>
+    :root{
+      --bg:#030914;
+      --panel:rgba(8,22,40,.78);
+      --panel-2:rgba(10,30,53,.9);
+      --line:rgba(56,189,248,.20);
+      --cyan:#22d3ee;
+      --blue:#38bdf8;
+      --violet:#8b5cf6;
+      --text:#f1f5f9;
+      --muted:#94a3b8;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      color:var(--text);
+      background:
+        radial-gradient(circle at 15% 10%, rgba(34,211,238,.10), transparent 28%),
+        radial-gradient(circle at 85% 15%, rgba(139,92,246,.12), transparent 30%),
+        var(--bg);
+      font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans Bengali",sans-serif;
+    }
+    .glass{
+      background:var(--panel);
+      border:1px solid rgba(148,163,184,.13);
+      backdrop-filter:blur(18px);
+      -webkit-backdrop-filter:blur(18px);
+    }
+    .hero-glow{
+      background:
+        radial-gradient(circle at 78% 45%, rgba(34,211,238,.16), transparent 22%),
+        radial-gradient(circle at 88% 70%, rgba(139,92,246,.18), transparent 24%);
+    }
+    .filter-btn.active{
+      background:linear-gradient(135deg,#0891b2,#2563eb);
+      border-color:rgba(103,232,249,.65);
+      box-shadow:0 0 24px rgba(34,211,238,.18);
+    }
+    .product-card{
+      transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease;
+    }
+    .product-card:hover{
+      transform:translateY(-5px);
+      border-color:rgba(34,211,238,.48);
+      box-shadow:0 18px 50px rgba(0,0,0,.28),0 0 28px rgba(34,211,238,.08);
+    }
+    .product-image{
+      aspect-ratio:4/3;
+      background:
+        radial-gradient(circle at 50% 40%,rgba(34,211,238,.13),transparent 35%),
+        linear-gradient(135deg,#071827,#0a2138);
+    }
+    .product-image img{
+      width:100%;height:100%;object-fit:cover;display:block;
+    }
+    .image-fallback{
+      display:none;
+      height:100%;
+      align-items:center;
+      justify-content:center;
+      flex-direction:column;
+      gap:8px;
+    }
+    .product-image.no-image .image-fallback{display:flex}
+    .product-image.no-image img{display:none}
+    .line-clamp-2{
+      display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+    }
+    .search-box:focus{
+      outline:none;
+      border-color:rgba(34,211,238,.6);
+      box-shadow:0 0 0 3px rgba(34,211,238,.08);
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="sticky top-0 z-50 border-b border-cyan-400/10 bg-[#030914]/85 backdrop-blur-xl">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3">
+      <div class="flex items-center justify-between gap-4">
+        <a href="index.html" class="flex items-center gap-3 min-w-0">
+          <div class="w-11 h-11 rounded-2xl flex items-center justify-center border border-cyan-300/30 bg-cyan-400/10 text-cyan-300 font-black text-xl">RJ</div>
+          <div class="min-w-0">
+            <div class="font-black tracking-wide text-lg sm:text-xl truncate">RJ NETWORK</div>
+            <div class="text-[10px] sm:text-xs text-slate-400 truncate">দ্রুতগতির ইন্টারনেট মানেই সহজ জীবন।</div>
+          </div>
+        </a>
+
+        <div class="flex items-center gap-2">
+          <a href="index.html" class="hidden sm:inline-flex px-4 py-2 rounded-xl glass text-sm font-semibold hover:border-cyan-400/40 transition">হোম</a>
+          <a href="tel:09639019016" class="px-3 py-2 rounded-xl bg-cyan-400/10 text-cyan-300 text-sm font-bold">09639-019016</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section class="hero-glow border-b border-cyan-400/10">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
+        <div class="max-w-3xl">
+          <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-cyan-400/10 border border-cyan-300/20 text-cyan-300 text-xs font-bold mb-4">
+            🛒 RJ NETWORK STORE
+          </div>
+          <h1 class="text-3xl sm:text-5xl font-black leading-tight">WiFi ও Networking পণ্য</h1>
+          <p class="mt-4 text-slate-400 text-sm sm:text-base leading-7 max-w-2xl">
+            Router, ONU, LAN Cable, RJ45 Connector, Power Adapter ও Fiber Networking-এর প্রয়োজনীয় পণ্য এক জায়গায়।
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Controls -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 py-6">
+      <div class="flex flex-col lg:flex-row gap-4 lg:items-center lg:justify-between">
+        <div id="filters" class="flex gap-2 overflow-x-auto pb-1">
+          <button data-category="all" class="filter-btn active shrink-0 px-4 py-2.5 rounded-xl border border-slate-700 text-sm font-bold">সব পণ্য</button>
+          <button data-category="router" class="filter-btn shrink-0 px-4 py-2.5 rounded-xl border border-slate-700 text-sm font-bold">রাউটার</button>
+          <button data-category="onu" class="filter-btn shrink-0 px-4 py-2.5 rounded-xl border border-slate-700 text-sm font-bold">ONU / ONT</button>
+          <button data-category="lan" class="filter-btn shrink-0 px-4 py-2.5 rounded-xl border border-slate-700 text-sm font-bold">LAN কেবল</button>
+          <button data-category="rj45" class="filter-btn shrink-0 px-4 py-2.5 rounded-xl border border-slate-700 text-sm font-bold">RJ45</button>
+          <button data-category="adapter" class="filter-btn shrink-0 px-4 py-2.5 rounded-xl border border-slate-700 text-sm font-bold">অ্যাডাপ্টার</button>
+          <button data-category="fiber" class="filter-btn shrink-0 px-4 py-2.5 rounded-xl border border-slate-700 text-sm font-bold">ফাইবার</button>
+        </div>
+
+        <input id="search" class="search-box w-full lg:w-80 glass rounded-xl px-4 py-3 text-sm text-slate-200 placeholder:text-slate-500" type="search" placeholder="পণ্য খুঁজুন...">
+      </div>
+
+      <div class="flex items-center justify-between mt-6">
+        <p id="resultCount" class="text-sm text-slate-400"></p>
+      </div>
+
+      <!-- Product Grid -->
+      <div id="productGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-4"></div>
+
+      <div id="emptyState" class="hidden glass rounded-3xl p-12 text-center mt-5">
+        <div class="text-5xl mb-4">🔎</div>
+        <h2 class="text-xl font-bold">কোনো পণ্য পাওয়া যায়নি</h2>
+        <p class="text-sm text-slate-400 mt-2">অন্য category বা search keyword দিয়ে চেষ্টা করুন।</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-cyan-400/10 mt-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8 text-center text-sm text-slate-500">
+      <div class="font-black text-slate-200 text-lg">RJ NETWORK</div>
+      <div class="mt-2">ঝাউদিয়া বলফিল্ড মোড়, কুষ্টিয়া সদর, কুষ্টিয়া</div>
+      <div class="mt-1">Hotline: <a href="tel:09639019016" class="text-cyan-300">09639-019016</a></div>
+      <div class="mt-4 text-xs">© <span id="year"></span> RJ NETWORK — All rights reserved.</div>
+    </div>
+  </footer>
+
+  <script>
+    const grid = document.getElementById('productGrid');
+    const search = document.getElementById('search');
+    const count = document.getElementById('resultCount');
+    const empty = document.getElementById('emptyState');
+    const buttons = [...document.querySelectorAll('.filter-btn')];
+
+    let activeCategory = 'all';
+
+    function taka(n){
+      return '৳ ' + Number(n).toLocaleString('en-BD');
+    }
+
+    function productCard(product){
+      const image = product.images?.[0] || '';
+      const unit = product.unit ? ' / ' + product.unit : '';
+
+      return `
+        <article class="product-card glass rounded-2xl overflow-hidden">
+          <a href="product.html?id=${encodeURIComponent(product.id)}" class="block">
+            <div class="product-image relative ${image ? '' : 'no-image'}">
+              ${image ? `<img src="${image}" alt="${product.name}" loading="lazy" onerror="this.closest('.product-image').classList.add('no-image')">` : ''}
+              <div class="image-fallback">
+                <div class="text-6xl">📦</div>
+                <div class="text-xs text-slate-500">Product Image</div>
+              </div>
+
+              ${product.badge ? `<span class="absolute top-3 right-3 px-2 py-1 rounded-lg bg-cyan-400 text-slate-950 text-[10px] font-black">${product.badge}</span>` : ''}
+              <span class="absolute bottom-3 left-3 px-2.5 py-1 rounded-lg bg-slate-950/80 border border-white/10 text-[11px] font-bold text-cyan-300">${product.categoryName}</span>
+            </div>
+          </a>
+
+          <div class="p-5">
+            <h2 class="font-bold text-lg leading-6 line-clamp-2">${product.name}</h2>
+            <p class="text-sm text-slate-400 leading-6 mt-2 line-clamp-2">${product.shortDescription}</p>
+
+            <div class="flex flex-wrap gap-1.5 mt-3">
+              ${product.specs.slice(0,3).map(s => `<span class="px-2 py-1 rounded-lg bg-white/[.04] border border-white/[.06] text-[11px] text-slate-400">${s}</span>`).join('')}
+            </div>
+
+            <div class="flex items-end justify-between gap-3 mt-5">
+              <div>
+                <div class="text-xs text-slate-500">${product.unit ? 'প্রতি ' + product.unit : 'মূল্য'}</div>
+                <div class="text-2xl font-black text-cyan-300">${taka(product.price)}${unit}</div>
+              </div>
+              <div class="flex items-center gap-1.5 text-xs font-bold ${product.stock ? 'text-emerald-400' : 'text-rose-400'}">
+                <span class="w-2 h-2 rounded-full ${product.stock ? 'bg-emerald-400' : 'bg-rose-400'}"></span>
+                ${product.stock ? 'স্টকে আছে' : 'স্টক শেষ'}
+              </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-2 mt-5">
+              <a href="product.html?id=${encodeURIComponent(product.id)}" class="text-center px-3 py-2.5 rounded-xl border border-slate-700 hover:border-cyan-400/50 hover:text-cyan-300 transition text-sm font-bold">
+                বিস্তারিত
+              </a>
+              <a href="https://wa.me/8801714019016?text=${encodeURIComponent('আসসালামু আলাইকুম, আমি ' + product.name + ' সম্পর্কে জানতে চাই।')}" target="_blank" rel="noopener" class="text-center px-3 py-2.5 rounded-xl bg-emerald-500/90 hover:bg-emerald-400 text-slate-950 transition text-sm font-black">
+                WhatsApp
+              </a>
+            </div>
+          </div>
+        </article>
+      `;
+    }
+
+    function render(){
+      const keyword = search.value.trim().toLowerCase();
+
+      const filtered = PRODUCTS.filter(p => {
+        const categoryMatch = activeCategory === 'all' || p.category === activeCategory;
+        const searchMatch = !keyword ||
+          p.name.toLowerCase().includes(keyword) ||
+          p.categoryName.toLowerCase().includes(keyword) ||
+          p.shortDescription.toLowerCase().includes(keyword);
+        return categoryMatch && searchMatch;
+      });
+
+      grid.innerHTML = filtered.map(productCard).join('');
+      count.textContent = `${filtered.length}টি পণ্য দেখানো হচ্ছে`;
+      empty.classList.toggle('hidden', filtered.length !== 0);
+    }
+
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        activeCategory = btn.dataset.category;
+        buttons.forEach(b => b.classList.toggle('active', b === btn));
+        render();
+      });
+    });
+
+    search.addEventListener('input', render);
+    document.getElementById('year').textContent = new Date().getFullYear();
+    render();
+  </script>
+</body>
+</html>
